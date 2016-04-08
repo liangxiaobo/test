@@ -61,7 +61,7 @@
       </textarea>
     </div>
 
-    <div class="panel-right">
+    <div class="panel-right" id="per_pack">
       <pre>
         <code></code>
       </pre>
@@ -98,7 +98,18 @@ $("#edit_txt textarea").bind("keydown", function(e){
 });
 
 $("#edit_txt textarea").bind("keyup", function(e){
-  $("pre code").text($(this).val());
+
+  // 替换字符串
+  var txt_all = $(this).val().replace(/</g, "&lt;")
+  .replace(/>/g, "&gt;")
+  .replace(/&lt;pre.*&gt;/, "<pre>")
+  .replace(/&lt;\/pre&gt;/, "</pre>")
+  .replace(/&lt;code.*&gt;/, "<code>")
+  .replace(/&lt;\/code&gt;/, "</code>");
+  console.log(txt_all);
+
+  $("#per_pack").html(txt_all);
+  //$("pre code").text($(this).val());
   $('pre code').each(function(i, block) {
     hljs.highlightBlock(block);
   });
